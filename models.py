@@ -1,27 +1,39 @@
+import os
+import pickle
 import tensorflow as tf
-import tensorflow_datasets as tfds
 
 
 class CNN(tf.keras.Model):
-    def __init__(self, num_classes, input_shape):
+    def __init__(self, num_classes: int, input_shape: tuple[int, int, int]):
         super(CNN, self).__init__()
-        self.conv1 = tf.keras.layers.Conv2D(32, 3, activation='relu', input_shape=input_shape)
-        self.pool1 = tf.keras.layers.MaxPool2D()
-        self.conv2 = tf.keras.layers.Conv2D(64, 3, activation='relu')
-        self.pool2 = tf.keras.layers.MaxPool2D()
-        self.flatten = tf.keras.layers.Flatten()
-        self.dense1 = tf.keras.layers.Dense(128, activation='relu')
-        self.dense2 = tf.keras.layers.Dense(num_classes, activation='softmax')
+        self.in_shape = input_shape
+        self.cnn = tf.keras.Sequential([
+            tf.keras.layers.Conv2D(32, 3, activation='relu', input_shape=input_shape),
+            tf.keras.layers.MaxPool2D(),
+            tf.keras.layers.Conv2D(64, 3, activation='relu'),
+            tf.keras.layers.MaxPool2D(),
+            tf.keras.layers.Flatten(),
+            tf.keras.layers.Dense(128, activation='relu'),
+            tf.keras.layers.Dense(num_classes, activation='softmax')
+        ])
 
-    def call(self, x):
-        x = self.conv1(x)
-        x = self.pool1(x)
-        x = self.conv2(x)
-        x = self.pool2(x)
-        x = self.flatten(x)
-        x = self.dense1(x)
-        return self.dense2(x)
+    def call(self, x: tf.Tensor) -> tf.Tensor:
+        y: tf.Tensor = self.cnn(x)  # type: ignore
+        return y
 
-    def model(self):
-        x = tf.keras.Input(shape=(28, 28, 1))
+    def model(self) -> tf.keras.Model:
+        x: tf.Tensor = tf.keras.Input(shape=self.in_shape)  # type: ignore
         return tf.keras.Model(inputs=[x], outputs=self.call(x))
+
+    def save(self, path: str, history: tf.keras.callbacks.History):
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        self.save_weights(path + 'model.h5')
+        with open(path + 'history.data', 'wb') as file_pi:
+            pickle.dump(history.history, file_pi)
+
+    def load(self, path: str) -> dict:
+        self.model().load_weights(path + 'model.h5')
+        history = dict()
+        with open(path + 'history.data', "rb") as file_pi:
+            history = pickle.load(file_pi)
+        return history

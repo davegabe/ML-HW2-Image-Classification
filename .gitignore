@@ -1,6 +1,7 @@
 /results
 /data
 /model
+/plot
 /__pycache__
 *.pyc
 settings.json

@@ -21,17 +21,34 @@ As this homework is about image classification, I decided to use the [10 Monkey 
 
 # Folder structure
 
-
-
-# data
-#   - training
-#       - n0
-#       - ...
-#       - n9
-#   - validation
-#       - n0
-#       - ...
-#       - n9
+```
+project
+│   main.py
+│   ...   
+│
+└───data
+│   └───training
+│   |   └───n0
+│   |   |   image1.jpg
+│   |   |   ...
+|   |   |
+│   |   └───...
+│   |   |
+│   |   └───n9
+│   |   │   image1.jpg
+│   |   │   ...
+|   |
+│   └───validation
+│   |   └───n0
+│   |   |   image1.jpg
+│   |   |   ...
+|   |   |
+│   |   └───...
+│   |   |
+│   |   └───n9
+│   |   |   image1.jpg
+│   |   |   ...
+```
 
 
 More details about the assignment can be found in the [report](report/main.pdf) PDF file.
