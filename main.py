@@ -32,10 +32,14 @@ def load_dataset(path="data/", split='training', target_size=(32, 32)):
 
 
 def main():
-    # Define the dataset
+    # Define the paths
     data_path = 'data/'
     model_path = 'model/'
     plot_path = 'plot/'
+    os.makedirs(model_path, exist_ok=True)
+    os.makedirs(plot_path, exist_ok=True)
+
+    # Define the parameters
     target_size = (128, 128, 3)
     epochs = 10
 

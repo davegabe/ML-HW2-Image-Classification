@@ -27,6 +27,7 @@ project
 │   ...   
 │
 └───data
+|   |   monkey_labels.txt
 │   └───training
 │   |   └───n0
 │   |   |   image1.jpg

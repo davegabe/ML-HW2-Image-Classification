@@ -26,7 +26,6 @@ class CNN(tf.keras.Model):
         return tf.keras.Model(inputs=[x], outputs=self.call(x))
 
     def save(self, path: str, history: tf.keras.callbacks.History):
-        os.makedirs(os.path.dirname(path), exist_ok=True)
         self.save_weights(path + 'model.h5')
         with open(path + 'history.data', 'wb') as file_pi:
             pickle.dump(history.history, file_pi)
