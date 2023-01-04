@@ -41,7 +41,7 @@ def main():
 
     # Define the parameters
     target_size = (128, 128, 3)
-    epochs = 10
+    epochs = 3
 
     # Load the dataset
     print("Loading the dataset...")
@@ -72,7 +72,6 @@ def main():
     old_history: dict = dict()
     if os.path.exists(model_path + 'model.h5'):
         print("Loading the model...")
-        old_history = model.load(model_path)
         # Continue training the model
         epochs -= len(old_history['accuracy'])
 
@@ -84,7 +83,8 @@ def main():
     )
 
     # Merge the history
-    history.history = history.history | old_history
+    for key in history.history.keys():
+        history.history[key] = old_history.get(key, []) + history.history[key]
 
     # Plot the accuracy and loss
     plt.plot(history.history['accuracy'], label='Accuracy')
