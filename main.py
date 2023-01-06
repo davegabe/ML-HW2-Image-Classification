@@ -1,12 +1,104 @@
-from models import CNN
-import seaborn as sns
-import pandas as pd
+from models import CNN, AutoencoderClassifier
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
+
+
+def train_CNN(target_size: tuple[int, int, int], epochs: int, model_path: str, plot_path: str, train_datagen: tf.keras.preprocessing.image.ImageDataGenerator, train_images: np.ndarray, train_labels: np.ndarray, val_images: np.ndarray, val_labels: np.ndarray):
+    # Train the model
+    print("Training the model...")
+    model = CNN(num_classes=10, input_shape=target_size)
+    model.compile(
+        optimizer='adam',
+        loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+        metrics=['accuracy', 'mae']
+    )
+
+    # Load the model
+    old_history: dict[str, list[float]] = dict()
+    if os.path.exists(model_path + 'cnn-model.h5'):
+        print("Loading the model...")
+        # Continue training the model
+        old_history = model.load(model_path)
+        epochs -= len(old_history['accuracy'])
+
+    # Train the model
+    history: tf.keras.callbacks.History = model.fit(
+        train_datagen.flow(train_images, train_labels, batch_size=32),
+        epochs=epochs,
+        validation_data=(val_images, val_labels)
+    )
+
+    # Merge the history
+    for key in history.history.keys():
+        history.history[key] = old_history.get(key, []) + history.history[key]
+
+    # Plot the accuracy and loss
+    plt.plot(history.history['accuracy'], label='Accuracy')
+    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend(loc='lower right')
+    plt.savefig(plot_path + 'cnn-accuracy.png')
+
+    # Evaluate the model
+    print("Evaluating the model...")
+    test_acc = model.evaluate(val_images, val_labels)
+    print("Test accuracy: ", test_acc)
+
+    # Save the model
+    print("Saving the model...")
+    model.save(model_path, history)
+
+
+def train_Autoencoder(target_size: tuple[int, int, int], epochs: int, model_path: str, plot_path: str, train_datagen: tf.keras.preprocessing.image.ImageDataGenerator, train_images: np.ndarray, train_labels: np.ndarray, val_images: np.ndarray, val_labels: np.ndarray):
+    # Train the model
+    print("Training the model...")
+    model = AutoencoderClassifier(num_classes=10, input_shape=target_size)
+    model.compile(
+        optimizer='adam',
+        loss=tf.keras.losses.SparseCategoricalCrossentropy(),
+        metrics=['accuracy', 'mae']
+    )
+
+    # Load the model
+    old_history: dict[str, list[float]] = dict()
+    if os.path.exists(model_path + 'autoencoder-model.h5'):
+        print("Loading the model...")
+        # Continue training the model
+        old_history = model.load(model_path)
+        epochs -= len(old_history['accuracy'])
+
+    # Train the model
+    history: tf.keras.callbacks.History = model.fit(
+        train_datagen.flow(train_images, train_labels, batch_size=32),
+        epochs=epochs,
+        validation_data=(val_images, val_labels)
+    )
+
+    # Merge the history
+    for key in history.history.keys():
+        history.history[key] = old_history.get(key, []) + history.history[key]
+
+    # Plot the accuracy and loss
+    plt.plot(history.history['accuracy'], label='Accuracy')
+    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
+    plt.legend(loc='lower right')
+    plt.savefig(plot_path + 'autoencoder-accuracy.png')
+
+    # Evaluate the model
+    print("Evaluating the model...")
+    test_acc = model.evaluate(val_images, val_labels)
+    print("Test accuracy: ", test_acc)
+
+    # Save the model
+    print("Saving the model...")
+    model.save(model_path, history)
 
 
 def load_dataset(path="data/", split='training', target_size=(32, 32)):
@@ -41,7 +133,7 @@ def main():
 
     # Define the parameters
     target_size = (128, 128, 3)
-    epochs = 3
+    epochs = 1000
 
     # Load the dataset
     print("Loading the dataset...")
@@ -59,49 +151,13 @@ def main():
         vertical_flip=False
     )
 
-    # Train the model
-    print("Training the model...")
-    model = CNN(num_classes=10, input_shape=target_size)
-    model.compile(
-        optimizer='adam',
-        loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-        metrics=['accuracy', 'mae']
-    )
+    # Train and evaluate the CNN model
+    train_CNN(target_size, epochs, model_path, plot_path, train_datagen,
+              train_images, train_labels, val_images, val_labels)
 
-    # Load the model
-    old_history: dict = dict()
-    if os.path.exists(model_path + 'model.h5'):
-        print("Loading the model...")
-        # Continue training the model
-        epochs -= len(old_history['accuracy'])
-
-    # Train the model
-    history: tf.keras.callbacks.History = model.fit(
-        train_datagen.flow(train_images, train_labels, batch_size=32),
-        epochs=epochs,
-        validation_data=(val_images, val_labels)
-    )
-
-    # Merge the history
-    for key in history.history.keys():
-        history.history[key] = old_history.get(key, []) + history.history[key]
-
-    # Plot the accuracy and loss
-    plt.plot(history.history['accuracy'], label='Accuracy')
-    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.legend(loc='lower right')
-    plt.savefig(plot_path + 'accuracy.png')
-
-    # Evaluate the model
-    print("Evaluating the model...")
-    test_acc = model.evaluate(val_images, val_labels)
-    print("Test accuracy: ", test_acc)
-
-    # Save the model
-    print("Saving the model...")
-    model.save(model_path, history)
+    # Train and evaluate the Autoencoder model
+    train_Autoencoder(target_size, epochs, model_path, plot_path, train_datagen,
+                      train_images, train_labels, val_images, val_labels)
 
 
 if __name__ == '__main__':
