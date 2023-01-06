@@ -8,21 +8,21 @@ As this homework is about image classification, I decided to use the [10 Monkey 
 
 | Label | Latin Name            | Common Name               | Train Images | Validation Images | Total Images |
 | ----- | --------------------- | ------------------------- | ------------ | ----------------- | ------------ |
-| n0    | alouatta_palliata     | mantled_howler            | 131          | 26                | 157          |
-| n1    | erythrocebus_patas    | patas_monkey              | 139          | 28                | 167          |
-| n2    | cacajao_calvus        | bald_uakari               | 137          | 27                | 164          |
-| n3    | macaca_fuscata        | japanese_macaque          | 152          | 30                | 182          |
-| n4    | cebuella_pygmea       | pygmy_marmoset            | 131          | 26                | 157          |
-| n5    | cebus_capucinus       | white_headed_capuchin     | 141          | 28                | 169          |
-| n6    | mico_argentatus       | silvery_marmoset          | 132          | 26                | 158          |
-| n7    | saimiri_sciureus      | common_squirrel_monkey    | 142          | 28                | 170          |
-| n8    | aotus_nigriceps       | black_headed_night_monkey | 133          | 27                | 160          |
-| n9    | trachypithecus_johnii | nilgiri_langur            | 132          | 26                | 158          |
+| n0    | Alouatta Palliata     | Mantled Howler            | 131          | 26                | 157          |
+| n1    | Erythrocebus Patas    | Patas Monkey              | 139          | 28                | 167          |
+| n2    | Cacajao Calvus        | Bald Uakari               | 137          | 27                | 164          |
+| n3    | Macaca Fuscata        | Japanese Macaque          | 152          | 30                | 182          |
+| n4    | Cebuella Pygmea       | Pygmy Marmoset            | 131          | 26                | 157          |
+| n5    | Cebus Capucinus       | White Headed Capuchin     | 141          | 28                | 169          |
+| n6    | Mico Argentatus       | Silvery Marmoset          | 132          | 26                | 158          |
+| n7    | Saimiri Sciureus      | Common Squirrel Monkey    | 142          | 28                | 170          |
+| n8    | Aotus Nigriceps       | Black Headed Night Monkey | 133          | 27                | 160          |
+| n9    | Trachypithecus Johnii | Nilgiri Langur            | 132          | 26                | 158          |
 
 # Folder structure
 
 ```
-project
+project folder
 │   main.py
 │   ...   
 │

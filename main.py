@@ -195,10 +195,10 @@ def main():
     # Augment the dataset
     print("Augmenting the dataset...")
     train_datagen = tf.keras.preprocessing.image.ImageDataGenerator(
-        rotation_range=10,
-        zoom_range=0.1,
-        width_shift_range=0.1,
-        height_shift_range=0.1,
+        rotation_range=20,
+        zoom_range=0.2,
+        width_shift_range=0.2,
+        height_shift_range=0.2,
         horizontal_flip=True,
         vertical_flip=False
     )
