@@ -1,4 +1,4 @@
-from models import CNN, AlexNET, AutoencoderClassifier
+from models import CNN, AlexNET
 import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
@@ -43,53 +43,6 @@ def train_CNN(target_size: tuple[int, int, int], epochs: int, model_path: str, p
     plt.ylabel('Accuracy')
     plt.legend(loc='lower right')
     plt.savefig(plot_path + 'cnn-accuracy.png')
-
-    # Evaluate the model
-    print("Evaluating the model...")
-    test_acc = model.evaluate(val_images, val_labels)
-    print("Test accuracy: ", test_acc)
-
-    # Save the model
-    print("Saving the model...")
-    model.save(model_path, history)
-
-
-def train_Autoencoder(target_size: tuple[int, int, int], epochs: int, model_path: str, plot_path: str, train_datagen: tf.keras.preprocessing.image.ImageDataGenerator, train_images: np.ndarray, train_labels: np.ndarray, val_images: np.ndarray, val_labels: np.ndarray):
-    # Train the model
-    print("Training the model...")
-    model = AutoencoderClassifier(num_classes=10, input_shape=target_size)
-    model.compile(
-        optimizer='adam',
-        loss=tf.keras.losses.SparseCategoricalCrossentropy(),
-        metrics=['accuracy', 'mae']
-    )
-
-    # Load the model
-    old_history: dict[str, list[float]] = dict()
-    if os.path.exists(model_path + 'autoencoder-model.h5'):
-        print("Loading the model...")
-        # Continue training the model
-        old_history = model.load(model_path)
-        epochs -= len(old_history['accuracy'])
-
-    # Train the model
-    history: tf.keras.callbacks.History = model.fit(
-        train_datagen.flow(train_images, train_labels, batch_size=32),
-        epochs=epochs,
-        validation_data=(val_images, val_labels)
-    )
-
-    # Merge the history
-    for key in history.history.keys():
-        history.history[key] = old_history.get(key, []) + history.history[key]
-
-    # Plot the accuracy and loss
-    plt.plot(history.history['accuracy'], label='Accuracy')
-    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.legend(loc='lower right')
-    plt.savefig(plot_path + 'autoencoder-accuracy.png')
 
     # Evaluate the model
     print("Evaluating the model...")
@@ -207,11 +160,7 @@ def main():
     train_CNN(target_size, epochs, model_path, plot_path, train_datagen,
               train_images, train_labels, val_images, val_labels)
 
-    # # Train and evaluate the Autoencoder model
-    train_Autoencoder(target_size, epochs, model_path, plot_path, train_datagen,
-                      train_images, train_labels, val_images, val_labels)
-
-    # # Train and evaluate the AlexNET model
+    # Train and evaluate the AlexNET model
     train_AlexNET(target_size, epochs, model_path, plot_path, train_datagen,
                     train_images, train_labels, val_images, val_labels)
 
