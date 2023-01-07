@@ -25,16 +25,24 @@ The architecture is structured as follows:
 \newpage
 \subsection{Training}\label{sec:alexnet-training}
 I have trained two AlexNet models with different learning rates (0.001 and 0.0001) using the Adam optimizer.
-It has been trained using Google Colab with a GPU runtime and the training took about 1 hour.
-The training and validation accuracy are shown in Figure~\ref{fig:alexnet-accuracy} for both learning rates.
+It has been trained using Google Colab with a GPU runtime and the training took about 1 hour for each model.
+The training and validation accuracy and loss are shown in Figure~\ref{fig:alexnet-accuracy} and Figure~\ref{fig:alexnet-loss}.
 As we can see, a learning rate of 0.001 is too high and the model does not converge.
 
 \begin{figure}[h]
     \centering
-    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/alexnet-accuracy-lr-0001.png}}}
+    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-0001/alexnet-accuracy.png}}}
     \qquad
-    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/alexnet-accuracy-lr-00001.png}}}
+    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-00001/alexnet-accuracy.png}}}
     \caption{Training and validation accuracy for the AlexNet with different learning rates}\label{fig:alexnet-accuracy}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-0001/alexnet-loss.png}}}
+    \qquad
+    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-00001/alexnet-loss.png}}}
+    \caption{Training and validation loss for the AlexNet with different learning rates}\label{fig:alexnet-loss}
 \end{figure}
 
 \subsection{Evaluation}\label{sec:alexnet-evaluation}
@@ -47,9 +55,9 @@ Looking at the confusion matrix, we can see that the model is not able to distin
 
 \begin{figure}[h]
     \centering
-    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/alexnet-confusion-matrix-lr-0001.png}}}
+    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-0001/alexnet-confusion-matrix.png}}}
     \qquad
-    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/alexnet-confusion-matrix-lr-00001.png}}}
+    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-00001/alexnet-confusion-matrix.png}}}
     \caption{Confusion matrix for the AlexNet with different learning rates}\label{fig:alexnet-confusion-matrix}
 \end{figure}
 

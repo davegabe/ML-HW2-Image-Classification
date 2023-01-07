@@ -1,5 +1,5 @@
 \section{Convolutional Neural Network}\label{sec:cnn}
-In this section I will describe a Convolutional Neural Network architecture designed by me trying to improve the results of the AlexNet.
+In this section I will describe a Convolutional Neural Network architecture designed by me.
 
 \subsection{Architecture}\label{sec:cnn-architecture}
 The architecture is structured as follows:
@@ -15,16 +15,24 @@ The architecture is structured as follows:
 \end{itemize}
 
 \subsection{Training}\label{sec:cnn-training}
-The model was trained for 250 epochs with a batch size of 256 using the Adam optimizer with a learning rate of 0.001.
-It has been trained using Google Colab with a GPU runtime and the training took about 1 hours.
-The training and validation accuracy is shown in Figure~\ref{fig:cnn-accuracy}.
+I have trained two CNN models with different learning rates (0.001 and 0.0001) using the Adam optimizer.
+It has been trained using Google Colab with a GPU runtime and the training took about 1 hour for each model.
+The training and validation accuracy and loss are shown in Figure~\ref{fig:cnn-accuracy} and Figure~\ref{fig:cnn-loss}.
 
 \begin{figure}[h]
     \centering
-    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/cnn-accuracy-lr-0001.png}}}
+    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-0001/cnn-accuracy.png}}}
     \qquad
-    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/cnn-accuracy-lr-00001.png}}}
+    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-00001/cnn-accuracy.png}}}
     \caption{Training and validation accuracy for the CNN with different learning rates}\label{fig:cnn-accuracy}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-0001/cnn-loss.png}}}
+    \qquad
+    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-00001/cnn-loss.png}}}
+    \caption{Training and validation loss for the CNN with different learning rates}\label{fig:cnn-loss}
 \end{figure}
 
 \subsection{Evaluation}\label{sec:cnn-evaluation}
@@ -35,13 +43,6 @@ As we can see from the results, both the learning rates have similar results.
 However, the model with a learning rate of 0.001 have a better accuracy and a better AUC.
 In fact we can see from the confusion matrix that the model with a learning rate of 0.001 is able to classify better the classes.
 
-\begin{figure}[h]
-    \centering
-    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/cnn-confusion-matrix-lr-0001.png}}}
-    \qquad
-    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/cnn-confusion-matrix-lr-00001.png}}}
-    \caption{Confusion matrix for the CNN with different learning rates}\label{fig:cnn-confusion-matrix}
-\end{figure}
 
 \begin{table}[h]
     \centering
@@ -56,3 +57,11 @@ In fact we can see from the confusion matrix that the model with a learning rate
     \end{tabular}
     \caption{Evaluation of the CNN}\label{tab:results-cnn}
 \end{table}
+
+\begin{figure}[h]
+    \centering
+    \subfloat[\centering Learning Rate = 0.001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-0001/cnn-confusion-matrix.png}}}
+    \qquad
+    \subfloat[\centering Learning Rate = 0.0001]{{\includegraphics[width=0.45\textwidth]{../plot/lr-00001/cnn-confusion-matrix.png}}}
+    \caption{Confusion matrix for the CNN with different learning rates}\label{fig:cnn-confusion-matrix}
+\end{figure}

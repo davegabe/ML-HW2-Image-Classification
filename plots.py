@@ -14,6 +14,7 @@ def main():
     model_path = 'model/'
     target_size = (256, 256, 3)
     epochs = 250
+    os.makedirs(plot_path, exist_ok=True)
 
     # Load the models
     print("Loading the models...")
@@ -53,9 +54,23 @@ def main():
     plt.plot(cnn_history['val_accuracy'], label='Validation Accuracy')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
+    plt.yticks([i * 0.1 for i in range(11)])
+    plt.xticks([i for i in range(0, epochs, 25)])
+    plt.ylim([0, 1])
     plt.legend(loc='lower right')
-    plt.title('CNN')
     plt.savefig(plot_path + 'cnn-accuracy.png')
+    plt.close()
+
+    # Plot the loss for the CNN model
+    plt.plot(cnn_history['loss'], label='Loss', color='red')
+    plt.plot(cnn_history['val_loss'], label='Validation Loss', color='green')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.yticks([i * 0.5 for i in range(15)])
+    plt.xticks([i for i in range(0, epochs, 25)])
+    plt.ylim([0, min(7, max(cnn_history['val_loss']))])
+    plt.legend(loc='upper right')
+    plt.savefig(plot_path + 'cnn-loss.png')
     plt.close()
 
     # Plot the accuracy for the AlexNET model
@@ -63,9 +78,23 @@ def main():
     plt.plot(alexnet_history['val_accuracy'], label='Validation Accuracy')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
+    plt.yticks([0.1 * i for i in range(11)])
+    plt.xticks([i for i in range(0, epochs, 25)])
+    plt.ylim([0, 1])
     plt.legend(loc='lower right')
-    plt.title('AlexNET')
     plt.savefig(plot_path + 'alexnet-accuracy.png')
+    plt.close()
+
+    # Plot the loss for the AlexNET model
+    plt.plot(alexnet_history['loss'], label='Loss', color='red')
+    plt.plot(alexnet_history['val_loss'], label='Validation Loss', color='green')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.yticks([i * 0.5 for i in range(15)])
+    plt.xticks([i for i in range(0, epochs, 25)])
+    plt.ylim([0, min(7, max(alexnet_history['val_loss']))])
+    plt.legend(loc='upper right')
+    plt.savefig(plot_path + 'alexnet-loss.png')
     plt.close()
 
     # Plot the accuracy
@@ -75,6 +104,9 @@ def main():
     plt.plot(alexnet_history['val_accuracy'], label='AlexNET Validation Accuracy')
     plt.xlabel('Epoch')
     plt.ylabel('Accuracy')
+    plt.yticks([0.1 * i for i in range(11)])
+    plt.xticks([i for i in range(0, epochs, 25)])
+    plt.ylim([0, 1])
     plt.legend(loc='lower right')
     plt.savefig(plot_path + 'accuracy.png')
     plt.close()
@@ -86,6 +118,8 @@ def main():
     plt.plot(alexnet_history['val_loss'], label='AlexNET Validation Loss')
     plt.xlabel('Epoch')
     plt.ylabel('Loss')
+    plt.yticks([i*0.5 for i in range(15)])
+    plt.xticks([i for i in range(0, epochs, 25)])
     plt.ylim([0, 7])
     plt.legend(loc='upper right')
     plt.savefig(plot_path + 'loss.png')
