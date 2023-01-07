@@ -18,7 +18,7 @@ def plot_csv(data):
     ax.set_title('Number of Images per Class')
     ax.legend(['Train Images', 'Validation Images'], loc='upper right')
     plt.tight_layout()
-    plt.savefig(plot_path + 'monkey_labels.png', dpi=600)
+    plt.savefig(plot_path + 'monkey_labels.png')
     plt.close()
 
 def plot_grid(train_path, data):
@@ -44,7 +44,7 @@ def plot_grid(train_path, data):
         plt.imshow(image)
         plt.axis('off')
     plt.tight_layout()
-    plt.savefig(plot_path + 'data_examples.png', dpi=600)
+    plt.savefig(plot_path + 'data_examples.png')
     plt.close()
     plot_augmentation(image)
 
@@ -69,7 +69,7 @@ def plot_augmentation(image):
         plt.imshow(new_image)
         plt.axis('off')
     plt.tight_layout()
-    plt.savefig('plot/data_augmentation.png', dpi=600)
+    plt.savefig('plot/data_augmentation.png')
     plt.close()
 
 def main():
