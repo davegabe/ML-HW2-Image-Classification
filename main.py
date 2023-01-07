@@ -12,7 +12,7 @@ def train_CNN(target_size: tuple[int, int, int], epochs: int, model_path: str, p
     print("Training the model...")
     model = CNN(num_classes=10, input_shape=target_size)
     model.compile(
-        optimizer='adam',
+        optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
         loss=tf.keras.losses.SparseCategoricalCrossentropy(),
         metrics=['accuracy', 'mae']
     )
@@ -51,7 +51,7 @@ def train_AlexNET(target_size: tuple[int, int, int], epochs: int, model_path: st
     print("Training the model...")
     model = AlexNET(num_classes=10, input_shape=target_size)
     model.compile(
-        optimizer='adam',
+        optimizer=tf.keras.optimizers.Adam(learning_rate=0.001),
         loss=tf.keras.losses.SparseCategoricalCrossentropy(),
         metrics=['accuracy']
     )
