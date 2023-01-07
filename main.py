@@ -33,16 +33,8 @@ def train_CNN(target_size: tuple[int, int, int], epochs: int, model_path: str, p
     )
 
     # Merge the history
-    for key in history.history.keys():
-        history.history[key] = old_history.get(key, []) + history.history[key]
-
-    # Plot the accuracy and loss
-    plt.plot(history.history['accuracy'], label='Accuracy')
-    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.legend(loc='lower right')
-    plt.savefig(plot_path + 'cnn-accuracy.png')
+    for key in old_history.keys():
+        history.history[key] = old_history[key] + history.history.get(key, [])
 
     # Evaluate the model
     print("Evaluating the model...")
@@ -80,16 +72,8 @@ def train_AlexNET(target_size: tuple[int, int, int], epochs: int, model_path: st
     )
 
     # Merge the history
-    for key in history.history.keys():
-        history.history[key] = old_history.get(key, []) + history.history[key]
-
-    # Plot the accuracy and loss
-    plt.plot(history.history['accuracy'], label='Accuracy')
-    plt.plot(history.history['val_accuracy'], label='Validation Accuracy')
-    plt.xlabel('Epoch')
-    plt.ylabel('Accuracy')
-    plt.legend(loc='lower right')
-    plt.savefig(plot_path + 'alexnet-accuracy.png')
+    for key in old_history.keys():
+        history.history[key] = old_history[key] + history.history.get(key, [])
 
     # Evaluate the model
     print("Evaluating the model...")
@@ -138,7 +122,7 @@ def main():
 
     # Define the parameters
     target_size = (256, 256, 3)
-    epochs = 500
+    epochs = 250
 
     # Load the dataset
     print("Loading the dataset...")
