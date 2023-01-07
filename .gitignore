@@ -1,0 +1,13 @@
+/results
+/data
+/model
+/__pycache__
+*.pyc
+settings.json
+/report/*.fls
+/report/*.fdb_latexmk
+/report/*.aux
+/report/*.out
+/report/*.log
+/report/*.synctex.gz
+/submission
